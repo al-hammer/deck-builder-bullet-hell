@@ -1,0 +1,70 @@
+
+setup a Github repo: deck-builder-bullet-hell
+
+
+ - clean up thirdparty
+ - add requirements.txt
+ - add README.md
+	- one-liner pitch
+	- installation
+	- running
+ - add ATTRIBUTION.md
+	- mention Kenney's packs you're using
+
+
+
+card-based roguelike bullet hell, AKA Enter The Gungeon meets Slay the Spire?
+
+you can slow down/pause the game to play a card (and if you slow down you MUST play a card or draw another hand)
+
+drawing a hand takes time (an animation)
+
+cards translate into attacks, defenses, structures, weapons, temporary buffs or debuffs
+	think: barricades, turrets, traps, lures, etc.
+
+	some cards are instants, some require an animation, some require animation AND slow you down, or force you to stand
+		obvious move: have a card that makes the next card you play an instant, or rather speeds it up by one (instant -- animation -- slow-moving animation -- standing animation)
+		item that buffs slow and standing animations?
+		
+	
+	there should be some energy mechanism similar to StS
+		should recharge fully when you shuffle your hand
+		should recharge slowly when you don't shuffle
+			recharge speed is a variable too
+		
+		initially capped at 3, can be increased, StS-style
+	
+	you start with 2 weapon slots, can increase/decrease with items
+	
+	each end of combat you lose your weapons 
+	
+consumables?
+
+items affect both card aspect and bullet hell aspect
+		
+so you have layers of game knowledge:
+  movement and aiming
+  enemy/boss knowledge
+  card tactics
+  deck/item build strategy
+
+
+good opportunity to build systems :)
+	factions and "charming"
+	stealth
+	traps/lures
+	boss limb breaks
+	
+	
+MVP:
+ - movement + firing guns + several guns
+	- you can use particle effects and occluder in PadLib
+	
+ - cards UI + turns/draws + different kinds of animation
+	- several different kinds of cards
+ - level(s)	
+	- with some way to know the kinds of rooms you're getting, so that you don't always traverse most/all of the dungeon like in EtG
+ - enemies
+ - boss or two
+	- a single big one
+	- a duo that you have to zigzag between (with one being aggressive and one being passive, and then they switch)
