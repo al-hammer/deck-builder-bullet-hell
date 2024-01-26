@@ -1,15 +1,9 @@
 
-setup a Github repo: deck-builder-bullet-hell
-
-
- - clean up thirdparty
  - add requirements.txt
  - add README.md
 	- one-liner pitch
 	- installation
 	- running
- - add ATTRIBUTION.md
-	- mention Kenney's packs you're using
 
 
 
