@@ -21,19 +21,3 @@ def resolve_range(t):
             return random.random() * (upper - lower) + lower
     # a scalar
     return t
-
-
-def load_image(name):
-    fullname = os.path.join(ASSETS_DIR, name)
-    image = pygame.image.load(fullname).convert_alpha()
-    image.set_colorkey(None)
-    return image
-
-
-# convert a grayscale + alpha image into an image
-# in shades of a given color
-def recolor_image(image, color):
-    color = pygame.Color(color)
-    a = pygame.surfarray.pixels2d(image)
-    # TODO
-

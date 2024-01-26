@@ -1,9 +1,13 @@
 
- - add requirements.txt
- - add README.md
-	- one-liner pitch
-	- installation
-	- running
+consider pace of play: EtG/bullet hell is very fast paced, StS/turn-based cards are as slow as you want them to be
+ - if this were a cover-based shooter it would have a more natural flow with stops for taking cover, reloading, going between covers, etc.
+ - this means that:
+	- rooms need more cover, including ways to create cover via cards
+	- enemies need ways to deal with cover:
+		- ways to efficiently destroy cover
+		- ways to maneuver around cover
+	- it also makes sense to have enemies act in "turns"
+		- let's say the enemy does a large AoE each end of turn, but it also shoots bullets during the turn, so you can prepare for the AoE while dodging the bullets
 
 
 
@@ -11,7 +15,7 @@ card-based roguelike bullet hell, AKA Enter The Gungeon meets Slay the Spire?
 
 you can slow down/pause the game to play a card (and if you slow down you MUST play a card or draw another hand)
 
-drawing a hand takes time (an animation)
+drawing a hand of cards takes time (an animation)
 
 cards translate into attacks, defenses, structures, weapons, temporary buffs or debuffs
 	think: barricades, turrets, traps, lures, etc.

@@ -1,6 +1,6 @@
 import sys
-import particles
 from common import *
+import particles, images
 
 TARGET_FPS = 60
 
@@ -8,7 +8,7 @@ TARGET_FPS = 60
 class Cursor(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = load_image(r"kenney\ufo\shipGreen_manned.png")
+        self.image = images.load_image(r"kenney\ufo\shipGreen_manned.png")
         self.rect = self.image.get_rect()
 
     def update(self, mouse_pos):
@@ -24,7 +24,6 @@ def main():
     black = 0, 0, 0
 
     particle_system = particles.ParticleSystem()
-    spray_colors = [(255, 20, 255), (50, 255, 50), (255, 100, 100), (50, 150, 255), (0, 255, 255)]
     spark_image_names = [r"kenney\particles\star_01.png",
                          r"kenney\particles\star_04.png",
                          r"kenney\particles\star_06.png",
@@ -32,14 +31,10 @@ def main():
                          r"kenney\particles\star_08.png",
                          r"kenney\particles\star_09.png"
                          ]
-    painter_factory = particles.ImagePainterFactory(spark_image_names, (32, 32))
+    painter_factory = particles.ImagePainterFactory(spark_image_names, (32, 32), images.RAINBOW)
     spray = particles.SprayEmitter((0, 0), [(-200, 200), 0], (0, 500), 7,
                                    (0.8, 1.5), painter_factory)
     particle_system.add_emitter(spray)
-
-    # TEST HACK
-    recolor_image(load_image(spark_image_names[0]), (255, 0, 0))
-    # END OF TEST HACK
 
     cursor = Cursor()
     sprites = pygame.sprite.RenderPlain()

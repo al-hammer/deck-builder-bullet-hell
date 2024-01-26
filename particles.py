@@ -1,4 +1,5 @@
 from common import *
+import images
 
 
 class Particle(object):
@@ -56,10 +57,16 @@ class PixelPainterFactory(PainterFactory):
 
 
 class ImagePainterFactory(PainterFactory):
-    def __init__(self, image_names, target_size=None):
-        self.images = [load_image(im) for im in image_names]
+    def __init__(self, image_names, target_size=None, colors=None):
+        self.images = [images.load_image(im) for im in image_names]
         if target_size is not None:
             self.images = [pygame.transform.scale(im, target_size) for im in self.images]
+        if colors is not None:
+            recolored_images = []
+            for image in self.images:
+                for color in colors:
+                    recolored_images.append(images.recolor_image(image, color))
+            self.images = recolored_images
 
     def build(self, *args, **kwargs):
         return ImagePainter(random.choice(self.images))
