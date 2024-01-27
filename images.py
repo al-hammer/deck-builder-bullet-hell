@@ -1,13 +1,17 @@
 from common import *
+import pygame
 import numpy
 
-RED = (255, 0, 0)
-ORANGE = (255, 165, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-INDIGO = (75, 0, 130)
-VIOLET = (238, 130, 238)
+
+RED = pygame.Color(255, 0, 0)
+ORANGE = pygame.Color(255, 165, 0)
+YELLOW = pygame.Color(255, 255, 0)
+GREEN = pygame.Color(0, 255, 0)
+BLUE = pygame.Color(0, 0, 255)
+INDIGO = pygame.Color(75, 0, 130)
+VIOLET = pygame.Color(238, 130, 238)
+BLACK = pygame.Color(0, 0, 0)
+TRANSPARENT = pygame.Color(0, 0, 0, 0)
 
 RAINBOW = [RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET]
 
@@ -26,6 +30,7 @@ def recolor_image(image, color):
     recolored_image = image.copy()
 
     pixels_red = pygame.surfarray.pixels_red(recolored_image)
+    # 'unsafe' here means you can lose information in the cast
     numpy.multiply(pixels_red, color.r / 255, out=pixels_red, casting='unsafe')
 
     pixels_green = pygame.surfarray.pixels_green(recolored_image)

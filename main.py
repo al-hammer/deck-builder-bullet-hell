@@ -1,6 +1,7 @@
 import sys
-from common import *
-import particles, images
+import pygame
+import particles
+import images
 
 TARGET_FPS = 60
 
@@ -21,8 +22,6 @@ def main():
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     pygame.mouse.set_visible(False)
 
-    black = 0, 0, 0
-
     particle_system = particles.ParticleSystem()
     spark_image_names = [r"kenney\particles\star_01.png",
                          r"kenney\particles\star_04.png",
@@ -31,10 +30,15 @@ def main():
                          r"kenney\particles\star_08.png",
                          r"kenney\particles\star_09.png"
                          ]
-    painter_factory = particles.ImagePainterFactory(spark_image_names, (32, 32), images.RAINBOW)
+    spark_painter_factory = particles.ImagePainterFactory(spark_image_names, (32, 32), images.RAINBOW)
     spray = particles.SprayEmitter((0, 0), [(-200, 200), 0], (0, 500), 7,
-                                   (0.8, 1.5), painter_factory)
+                                   (0.3, 0.6), spark_painter_factory)
     particle_system.add_emitter(spray)
+
+    flame_painter_factory = particles.FlamePainterFactory(images.RED, (2, 5))
+    point_flame = particles.SprayEmitter((0, 0), [0, (-100, -150)], (0, 0), 5,
+                                         (1.0, 2.5), flame_painter_factory)
+    particle_system.add_emitter(point_flame)
 
     cursor = Cursor()
     sprites = pygame.sprite.RenderPlain()
@@ -58,15 +62,20 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == pygame.BUTTON_LEFT:
                     spray.enable()
+                elif event.button == pygame.BUTTON_RIGHT:
+                    point_flame.enable()
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == pygame.BUTTON_LEFT:
                     spray.disable()
+                elif event.button == pygame.BUTTON_RIGHT:
+                    point_flame.disable()
 
         sprites.update(mouse_pos=mouse_pos)
         particle_system.update(1 / TARGET_FPS)  # better way?
         spray.move((mouse_pos[0] + 50, mouse_pos[1] + 110))
+        point_flame.move((mouse_pos[0] + 50, mouse_pos[1]))
 
-        screen.fill(black)
+        screen.fill(images.BLACK)
         sprites.draw(screen)
         particle_system.draw(screen)
         pygame.display.flip()

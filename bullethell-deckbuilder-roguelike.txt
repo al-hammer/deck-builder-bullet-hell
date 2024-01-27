@@ -39,6 +39,10 @@ cards translate into attacks, defenses, structures, weapons, temporary buffs or 
 consumables?
 
 items affect both card aspect and bullet hell aspect
+
+
+you should be able to draw cards outside of combat, if you want to interact with traps, secrets, environment
+
 		
 so you have layers of game knowledge:
   movement and aiming
@@ -65,4 +69,5 @@ MVP:
  - enemies
  - boss or two
 	- a single big one
+		- has AoE that gets weaker the more you damage it between AoE casts
 	- a duo that you have to zigzag between (with one being aggressive and one being passive, and then they switch)

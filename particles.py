@@ -1,5 +1,6 @@
 from common import *
 import images
+import pygame
 
 
 class Particle(object):
@@ -42,6 +43,39 @@ class ImagePainter(Painter):
         surface.blit(self.image, pos)
 
 
+# a flame particle is drawn as several concentric circles
+# with increasing transparency, fading and shrinking in time
+class FlamePainter(Painter):
+    DEFAULT_RADIUS = 5
+    # radii as multipliers of the innermost radius
+    # (should always end with a 1.0 multiplier)
+    RADII = [2.0, 1.3, 1.0]
+    # alphas as multipliers of the innermost color
+    # (should have the same length as RADII)
+    ALPHAS = [0.4, 0.7, 1.0]
+
+    def __init__(self, radius=DEFAULT_RADIUS, color=images.ORANGE):
+        self.radius = radius
+        self.color = pygame.Color(color)
+        # we need a secondary surface to handle transparency properly
+        self.surface_center = radius * max(FlamePainter.RADII)
+        self.surface = pygame.Surface((2 * self.surface_center, 2 * self.surface_center), pygame.SRCALPHA)
+
+    def draw(self, surface, pos, time, lifetime):
+        # we need a secondary surface to handle transparency properly,
+        # so we first draw onto it and then blit to screen
+        self.surface.fill(images.TRANSPARENT)
+
+        decay = max(0.0, 1.0 - time/lifetime)
+        for i, radius_multiplier in enumerate(FlamePainter.RADII):
+            radius = self.radius * radius_multiplier * decay
+            color = pygame.Color(self.color)
+            color.a = int(color.a * FlamePainter.ALPHAS[i] * decay)
+            pygame.draw.circle(self.surface, color, (self.surface_center, self.surface_center), radius)
+
+        surface.blit(self.surface, pos)
+
+
 class PainterFactory(object):
     def build(self, *args, **kwargs):
         pass
@@ -70,6 +104,15 @@ class ImagePainterFactory(PainterFactory):
 
     def build(self, *args, **kwargs):
         return ImagePainter(random.choice(self.images))
+
+
+class FlamePainterFactory(PainterFactory):
+    def __init__(self, color, radius):
+        self.color = color
+        self.radius = radius
+
+    def build(self, *args, **kwargs):
+        return FlamePainter(resolve_range(self.radius), self.color)
 
 
 # a particle with lifetime, velocity and acceleration
