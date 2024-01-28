@@ -1,6 +1,7 @@
 from common import *
 import images
 import pygame
+import pygame.gfxdraw
 
 
 class Particle(object):
@@ -43,37 +44,36 @@ class ImagePainter(Painter):
         surface.blit(self.image, pos)
 
 
-# a flame particle is drawn as several concentric circles
-# with increasing transparency, fading and shrinking in time
+# a flame particle is drawn a circle that shrinks and cools down
+# in time according to the images.FIRE spectrum
 class FlamePainter(Painter):
-    DEFAULT_RADIUS = 5
-    # radii as multipliers of the innermost radius
-    # (should always end with a 1.0 multiplier)
-    RADII = [2.0, 1.3, 1.0]
-    # alphas as multipliers of the innermost color
-    # (should have the same length as RADII)
-    ALPHAS = [0.4, 0.7, 1.0]
+    DEFAULT_RADIUS = 10
+    STEPS = len(images.FIRE)
+    STEP_SIZE = 1.0/(STEPS - 1)
 
-    def __init__(self, radius=DEFAULT_RADIUS, color=images.ORANGE):
+    def __init__(self, radius=DEFAULT_RADIUS):
         self.radius = radius
-        self.color = pygame.Color(color)
-        # we need a secondary surface to handle transparency properly
-        self.surface_center = radius * max(FlamePainter.RADII)
-        self.surface = pygame.Surface((2 * self.surface_center, 2 * self.surface_center), pygame.SRCALPHA)
 
     def draw(self, surface, pos, time, lifetime):
-        # we need a secondary surface to handle transparency properly,
-        # so we first draw onto it and then blit to screen
-        self.surface.fill(images.TRANSPARENT)
 
-        decay = max(0.0, 1.0 - time/lifetime)
-        for i, radius_multiplier in enumerate(FlamePainter.RADII):
-            radius = self.radius * radius_multiplier * decay
-            color = pygame.Color(self.color)
-            color.a = int(color.a * FlamePainter.ALPHAS[i] * decay)
-            pygame.draw.circle(self.surface, color, (self.surface_center, self.surface_center), radius)
+        progress = min(1.0, time / lifetime)
+        decay = 1.0 - progress
+        # compute current temperature (i.e. color) from progress
+        step = int(progress / FlamePainter.STEP_SIZE)
+        step_progress = (progress - step * FlamePainter.STEP_SIZE) / FlamePainter.STEP_SIZE
+        complement = 1.0 - step_progress
+        if step == FlamePainter.STEPS:
+            # last color
+            color = images.FIRE[step]
+        else:
+            color = pygame.Color(int(images.FIRE[step].r * complement +
+                                 images.FIRE[step + 1].r * step_progress),
+                                 int(images.FIRE[step].g * complement +
+                                 images.FIRE[step + 1].g * step_progress),
+                                 int(images.FIRE[step].b * complement +
+                                 images.FIRE[step + 1].b * step_progress))
 
-        surface.blit(self.surface, pos)
+        pygame.gfxdraw.filled_circle(surface, pos[0], pos[1], int(self.radius * decay), color)
 
 
 class PainterFactory(object):
@@ -107,12 +107,11 @@ class ImagePainterFactory(PainterFactory):
 
 
 class FlamePainterFactory(PainterFactory):
-    def __init__(self, color, radius):
-        self.color = color
+    def __init__(self, radius):
         self.radius = radius
 
     def build(self, *args, **kwargs):
-        return FlamePainter(resolve_range(self.radius), self.color)
+        return FlamePainter(resolve_range(self.radius))
 
 
 # a particle with lifetime, velocity and acceleration
@@ -167,13 +166,14 @@ class Emitter(object):
 # rate, velocity and acceleration can contain tuples instead of values to specify
 # a range of values
 class SprayEmitter(Emitter):
-    def __init__(self, pos, velocity, acceleration, rate, particle_lifetime, painter_factory):
+    def __init__(self, pos, velocity, acceleration, rate, particle_lifetime, painter_factory, jitter=(0, 0)):
         super().__init__(pos)
         self.velocity = velocity
         self.acceleration = acceleration
         self.rate = rate
         self.particle_lifetime = particle_lifetime
         self.painter_factory = painter_factory
+        self.jitter = jitter
 
     def emit(self):
         new_particles = []
@@ -191,7 +191,11 @@ class SprayEmitter(Emitter):
             acceleration[0] = resolve_range(acceleration[0])
             acceleration[1] = resolve_range(acceleration[1])
 
-            new_particles.append(MovingParticle(self.pos, lifetime, velocity, acceleration, painter))
+            pos = list(self.pos)
+            pos[0] += resolve_range(self.jitter[0])
+            pos[1] += resolve_range(self.jitter[1])
+
+            new_particles.append(MovingParticle(pos, lifetime, velocity, acceleration, painter))
 
         return new_particles
 

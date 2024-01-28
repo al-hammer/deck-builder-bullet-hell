@@ -32,12 +32,12 @@ def main():
                          ]
     spark_painter_factory = particles.ImagePainterFactory(spark_image_names, (32, 32), images.RAINBOW)
     spray = particles.SprayEmitter((0, 0), [(-200, 200), 0], (0, 500), 7,
-                                   (0.3, 0.6), spark_painter_factory)
+                                   (0.8, 1.5), spark_painter_factory)
     particle_system.add_emitter(spray)
 
-    flame_painter_factory = particles.FlamePainterFactory(images.RED, (2, 5))
-    point_flame = particles.SprayEmitter((0, 0), [0, (-100, -150)], (0, 0), 5,
-                                         (1.0, 2.5), flame_painter_factory)
+    flame_painter_factory = particles.FlamePainterFactory((15, 20))
+    point_flame = particles.SprayEmitter((0, 0), [(-30, 20), (-80, -100)], (0, 0), 4,
+                                         0.6, flame_painter_factory, jitter=((-10, 10), 0))
     particle_system.add_emitter(point_flame)
 
     cursor = Cursor()
@@ -73,7 +73,7 @@ def main():
         sprites.update(mouse_pos=mouse_pos)
         particle_system.update(1 / TARGET_FPS)  # better way?
         spray.move((mouse_pos[0] + 50, mouse_pos[1] + 110))
-        point_flame.move((mouse_pos[0] + 50, mouse_pos[1]))
+        point_flame.move((mouse_pos[0] + 60, mouse_pos[1] - 20))
 
         screen.fill(images.BLACK)
         sprites.draw(screen)
