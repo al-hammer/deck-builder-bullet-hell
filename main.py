@@ -35,9 +35,10 @@ def main():
                                    (0.8, 1.5), spark_painter_factory)
     particle_system.add_emitter(spray)
 
-    flame_painter_factory = particles.FlamePainterFactory((15, 20))
-    point_flame = particles.SprayEmitter((0, 0), [(-30, 20), (-80, -100)], (0, 0), 4,
-                                         0.6, flame_painter_factory, jitter=((-10, 10), 0))
+    # flame_painter_factory = particles.FancyFlamePainterFactory((12, 16))
+    flame_painter_factory = particles.CartoonFlamePainterFactory((12, 16))
+    point_flame = particles.SprayEmitter((0, 0), [(-30, 20), (-160, -200)], (0, 0), 2,
+                                         0.8, flame_painter_factory, jitter=((-10, 10), 0))
     particle_system.add_emitter(point_flame)
 
     cursor = Cursor()

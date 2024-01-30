@@ -46,34 +46,77 @@ class ImagePainter(Painter):
 
 # a flame particle is drawn a circle that shrinks and cools down
 # in time according to the images.FIRE spectrum
-class FlamePainter(Painter):
+class CartoonFlamePainter(Painter):
+    FIRE_GRADIENT = [images.YELLOW, images.ORANGE, images.RED, images.BLACK]
     DEFAULT_RADIUS = 10
-    STEPS = len(images.FIRE)
+    STEPS = len(FIRE_GRADIENT)
     STEP_SIZE = 1.0/(STEPS - 1)
 
     def __init__(self, radius=DEFAULT_RADIUS):
         self.radius = radius
 
     def draw(self, surface, pos, time, lifetime):
-
         progress = min(1.0, time / lifetime)
         decay = 1.0 - progress
         # compute current temperature (i.e. color) from progress
-        step = int(progress / FlamePainter.STEP_SIZE)
-        step_progress = (progress - step * FlamePainter.STEP_SIZE) / FlamePainter.STEP_SIZE
+        step = int(progress / CartoonFlamePainter.STEP_SIZE)
+        step_progress = (progress - step * CartoonFlamePainter.STEP_SIZE) / CartoonFlamePainter.STEP_SIZE
         complement = 1.0 - step_progress
-        if step == FlamePainter.STEPS:
+        if step == CartoonFlamePainter.STEPS:
             # last color
-            color = images.FIRE[step]
+            color = CartoonFlamePainter.FIRE_GRADIENT[step]
         else:
-            color = pygame.Color(int(images.FIRE[step].r * complement +
-                                 images.FIRE[step + 1].r * step_progress),
-                                 int(images.FIRE[step].g * complement +
-                                 images.FIRE[step + 1].g * step_progress),
-                                 int(images.FIRE[step].b * complement +
-                                 images.FIRE[step + 1].b * step_progress))
+            color = pygame.Color(int(CartoonFlamePainter.FIRE_GRADIENT[step].r * complement +
+                                 CartoonFlamePainter.FIRE_GRADIENT[step + 1].r * step_progress),
+                                 int(CartoonFlamePainter.FIRE_GRADIENT[step].g * complement +
+                                 CartoonFlamePainter.FIRE_GRADIENT[step + 1].g * step_progress),
+                                 int(CartoonFlamePainter.FIRE_GRADIENT[step].b * complement +
+                                 CartoonFlamePainter.FIRE_GRADIENT[step + 1].b * step_progress))
 
         pygame.gfxdraw.filled_circle(surface, pos[0], pos[1], int(self.radius * decay), color)
+
+
+class FancyFlamePainter(Painter):
+    DEFAULT_RADIUS = 10
+    FIRE_GRADIENT = [images.ORANGE, images.RED, images.BLACK]
+    STEPS = len(FIRE_GRADIENT)
+    STEP_SIZE = 1.0/(STEPS - 1)
+    KERNEL_ALPHA = 32
+    AURA_ALPHA = 16
+    AURA_MULTIPLIER = 2.0
+
+    def __init__(self, radius=DEFAULT_RADIUS):
+        self.radius = radius
+        self.aura_radius = int(radius * FancyFlamePainter.AURA_MULTIPLIER)
+        self.surface = pygame.Surface((2 * self.aura_radius, 2 * self.aura_radius), flags=pygame.SRCALPHA)
+
+    def draw(self, surface, pos, time, lifetime):
+        self.surface.fill(images.TRANSPARENT)
+        progress = min(1.0, time / lifetime)
+        decay = 1.0 - progress
+        # compute current temperature (i.e. color) from progress
+        step = int(progress / FancyFlamePainter.STEP_SIZE)
+        step_progress = (progress - step * FancyFlamePainter.STEP_SIZE) / FancyFlamePainter.STEP_SIZE
+        complement = 1.0 - step_progress
+        if step == FancyFlamePainter.STEPS:
+            # last color
+            color = FancyFlamePainter.FIRE_GRADIENT[step]
+        else:
+            color = pygame.Color(int(FancyFlamePainter.FIRE_GRADIENT[step].r * complement +
+                                 FancyFlamePainter.FIRE_GRADIENT[step + 1].r * step_progress),
+                                 int(FancyFlamePainter.FIRE_GRADIENT[step].g * complement +
+                                 FancyFlamePainter.FIRE_GRADIENT[step + 1].g * step_progress),
+                                 int(FancyFlamePainter.FIRE_GRADIENT[step].b * complement +
+                                 FancyFlamePainter.FIRE_GRADIENT[step + 1].b * step_progress),
+                                 FancyFlamePainter.KERNEL_ALPHA)
+        # draw fire kernel
+        pygame.gfxdraw.filled_circle(self.surface, self.aura_radius,
+                                     self.aura_radius, int(self.radius * decay), color)
+        # draw fire aura
+        # color.a = FancyFlamePainter.AURA_ALPHA
+        pygame.gfxdraw.filled_circle(self.surface, self.aura_radius,
+                                     self.aura_radius, int(self.aura_radius * decay), color)
+        surface.blit(self.surface, pos, special_flags=pygame.BLEND_RGBA_ADD)
 
 
 class PainterFactory(object):
@@ -106,12 +149,20 @@ class ImagePainterFactory(PainterFactory):
         return ImagePainter(random.choice(self.images))
 
 
-class FlamePainterFactory(PainterFactory):
+class CartoonFlamePainterFactory(PainterFactory):
     def __init__(self, radius):
         self.radius = radius
 
     def build(self, *args, **kwargs):
-        return FlamePainter(resolve_range(self.radius))
+        return CartoonFlamePainter(resolve_range(self.radius))
+
+
+class FancyFlamePainterFactory(PainterFactory):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def build(self, *args, **kwargs):
+        return FancyFlamePainter(resolve_range(self.radius))
 
 
 # a particle with lifetime, velocity and acceleration

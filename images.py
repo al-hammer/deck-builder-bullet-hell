@@ -14,7 +14,6 @@ BLACK = pygame.Color(0, 0, 0)
 TRANSPARENT = pygame.Color(0, 0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
 
-FIRE = [YELLOW, ORANGE, RED, BLACK]
 RAINBOW = [RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET]
 
 

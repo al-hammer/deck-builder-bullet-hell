@@ -10,6 +10,16 @@ consider pace of play: EtG/bullet hell is very fast paced, StS/turn-based cards 
 		- let's say the enemy does a large AoE each end of turn, but it also shoots bullets during the turn, so you can prepare for the AoE while dodging the bullets
 
 
+YOU CARD-DRAW AND PLAY INSTEAD OF RELOADING
+ - you choose the "reload" timing carefully
+ - after reloading you get weapons and/or items to use
+	- you want to set up combos with strong weapons that match the current level, boss range, etc.
+ - then you play the "round" with the weapons and items you got, maneuvering, dodging and firing
+
+
+an actual reload card (that reloads one of the last weapons used) seems reasonable
+
+MAKE CRITICAL AREAS for enemies and bosses, i.e. headshots
 
 card-based roguelike bullet hell, AKA Enter The Gungeon meets Slay the Spire?
 
@@ -42,6 +52,8 @@ items affect both card aspect and bullet hell aspect
 
 
 you should be able to draw cards outside of combat, if you want to interact with traps, secrets, environment
+
+Levels don't have to be very linear - they can repeat, rooms can be revisited, you can chase enemies through them...
 
 		
 so you have layers of game knowledge:
