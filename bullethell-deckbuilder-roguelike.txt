@@ -33,6 +33,7 @@ cards translate into attacks, defenses, structures, weapons, temporary buffs or 
 	some cards are instants, some require an animation, some require animation AND slow you down, or force you to stand
 		obvious move: have a card that makes the next card you play an instant, or rather speeds it up by one (instant -- animation -- slow-moving animation -- standing animation)
 		item that buffs slow and standing animations?
+		item that buffs long-range damage?
 		
 	
 	there should be some energy mechanism similar to StS
@@ -68,7 +69,14 @@ good opportunity to build systems :)
 	stealth
 	traps/lures
 	boss limb breaks
-	
+
+
+card thoughts:
+ - Slay the Spire
+ - Enter the Gungeon
+ - Worms
+ - Brotato??
+
 	
 MVP:
  - movement + firing guns + several guns
@@ -82,4 +90,6 @@ MVP:
  - boss or two
 	- a single big one
 		- has AoE that gets weaker the more you damage it between AoE casts
+		- a meteor attack that has marks on the floor you need to avoid
+		
 	- a duo that you have to zigzag between (with one being aggressive and one being passive, and then they switch)
