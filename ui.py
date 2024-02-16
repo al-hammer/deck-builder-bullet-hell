@@ -2,7 +2,7 @@ import pygame
 import images
 
 pygame.font.init()
-DEFAULT_FONT = pygame.font.SysFont("Candara", 50)
+DEFAULT_FONT = pygame.font.SysFont("Candara", 24)
 DEFAULT_TEXT_COLOR = images.WHITE
 
 

@@ -27,14 +27,16 @@ def main():
 
     def hover_update(button, hovering):
         if hovering:
-            button.text = "Hovering..."
+            button.rect.top -= 20
             button.draw()
         else:
-            button.text = "Gone"
+            button.rect.top += 20
             button.draw()
 
-    button = ui.Button((0, 0, 300, 100), on_click_cb=on_click, hover_update_cb=hover_update, text="Click me!",
-                       text_color=images.RED, bg_color=images.BLUE, text_offset=(30, 30))
+    axe_image = images.load_image(r"card/axe.png", 0.25)
+    button = ui.Button((200, 200, 300, 450), on_click_cb=on_click, hover_update_cb=hover_update, text="Flavor text",
+                       text_color=images.RED, bg_color=images.BLUE, text_offset=(30, 300),
+                       image=axe_image, image_offset=(10, 10))
     sprites.add(button)
 
     while True:

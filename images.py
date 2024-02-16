@@ -17,10 +17,14 @@ WHITE = pygame.Color(255, 255, 255)
 RAINBOW = [RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, VIOLET]
 
 
-def load_image(name):
+def load_image(name, scale=None):
     fullname = os.path.join(ASSETS_DIR, name)
     image = pygame.image.load(fullname).convert_alpha()
     image.set_colorkey(None)
+    if scale is not None:
+        size = image.get_size()
+        size = (size[0] * scale, size[1] * scale)
+        image = pygame.transform.scale(image, size)
     return image
 
 
