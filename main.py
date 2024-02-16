@@ -54,31 +54,34 @@ def main():
     pygame.key.set_repeat(100)  # held keys will generate repeated inputs this often
     # note: this logic seems to be buggy if you hold two keys at once and then release one of them
 
-    dt = 1 / TARGET_FPS
     while True:
+        # tick() returns a value in ms, we want a fractional second
+        dt = clock.tick(TARGET_FPS) / 1000
+
         mouse_pos = pygame.mouse.get_pos()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
+                # THIS IS ACTUALLY KINDA BACKWARDS, you can/should just check event.key
                 keys = pygame.key.get_pressed()
 
                 if keys[pygame.K_ESCAPE]:
                     sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == pygame.BUTTON_LEFT:
-                    spray.enable()
+                    spray.enabled = True
                     chime_sfx.play(loops=-1, fade_ms=500)
                 elif event.button == pygame.BUTTON_RIGHT:
-                    point_flame.enable()
+                    point_flame.enabled = True
                     fire_sfx.play()
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == pygame.BUTTON_LEFT:
-                    spray.disable()
+                    spray.enabled = False
                     chime_sfx.fadeout(800)
                 elif event.button == pygame.BUTTON_RIGHT:
-                    point_flame.disable()
+                    point_flame.enabled = False
                     fire_sfx.fadeout(800)
 
         sprites.update(dt=dt, mouse_pos=mouse_pos)
@@ -90,9 +93,6 @@ def main():
         sprites.draw(screen)
         particle_system.draw(screen)
         pygame.display.flip()
-
-        # tick() returns a value in ms, we want a fractional second
-        dt = clock.tick(TARGET_FPS) / 1000
 
 
 if __name__ == '__main__':

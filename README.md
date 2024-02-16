@@ -3,7 +3,7 @@ A deck builder bullet hell roguelike (like if Enter The Gungeon and Slay The Spi
 
 ## Installation
 * Clone the repo
-* Install PyGame (probably *pip install pygame*)
+* Install requirements: *pip install -r requirements.txt*
 
 ## Running
 * Probably *main.py*?

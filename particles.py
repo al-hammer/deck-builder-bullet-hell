@@ -191,12 +191,6 @@ class Emitter(object):
         self.pos = [float(p) for p in pos]
         self.enabled = False
 
-    def enable(self):
-        self.enabled = True
-
-    def disable(self):
-        self.enabled = False
-
     def move(self, pos):
         self.pos = [float(p) for p in pos]
 

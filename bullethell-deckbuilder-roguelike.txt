@@ -1,5 +1,15 @@
 
-consider pace of play: EtG/bullet hell is very fast paced, StS/turn-based cards are as slow as you want them to be
+
+FLAVOR: how about going fantasy? so you cast spells from magic cards when you "reload", aim them, dodge, cast again?
+ - I think it makes more sense to have a single fireball rather than a machine gun that fires lots of stuff
+ - you still dodge, it's still bullet hell, you just have to be more precise
+ - when you cast a few spells you get tiny orbs circling your head, each one representing a future spell
+	- when you start casting a certain spell its orb shifts to the center and grows bigger
+	- same for enemies - THOSE ARE THEIR INTENTIONS
+		- this way you can foresee their possible actions for their next "turn" and prepare appropriately
+
+
+consider PACE OF PLAY: EtG/bullet hell is very fast paced, StS/turn-based cards are as slow as you want them to be
  - if this were a cover-based shooter it would have a more natural flow with stops for taking cover, reloading, going between covers, etc.
  - this means that:
 	- rooms need more cover, including ways to create cover via cards
@@ -8,6 +18,30 @@ consider pace of play: EtG/bullet hell is very fast paced, StS/turn-based cards 
 		- ways to maneuver around cover
 	- it also makes sense to have enemies act in "turns"
 		- let's say the enemy does a large AoE each end of turn, but it also shoots bullets during the turn, so you can prepare for the AoE while dodging the bullets
+
+
+
+ACTUALLY, WHAT IF THIS IS COMPLETELY REAL-TIME? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ - the pace of combat naturally slows down periodically, and you'll need to learn when it's safe
+ - you cast spells, summon allies, conjure weapons, etc., as well as draw your hand, in real time
+	- use either mouse or keyboard numbers to use cards
+
+ - if it's completely real-time you can lean into the slowness, make the fight alternate between fast and hectic dodging and slower, deliberate attacks
+ 
+ - if it's real-time you can have rituals that require several card casts in sequence, performed while you're using defenses from other cards
+
+
+
+THEMATIC CHALLENGE: magic should be organic
+ - think about how much more you liked Naruto's naturalistic approach over classic fantasy
+	- breathing fire through your mouth is much better than throwing a magical fire grenade
+		- maybe your head morphs into a dragon head and you breathe fire
+	- so, summons don't appear above magic circles, summons are spewed from coffins that burst through the ground, for example
+	
+	- magic should be naturalistic, or monstrous
+	
+	- I think Avatar is also very good at this approach
+
 
 
 YOU CARD-DRAW AND PLAY INSTEAD OF RELOADING
@@ -19,6 +53,8 @@ YOU CARD-DRAW AND PLAY INSTEAD OF RELOADING
 
 an actual reload card (that reloads one of the last weapons used) seems reasonable
 
+a parry card (for projectiles, not beams or AoEs)
+
 MAKE CRITICAL AREAS for enemies and bosses, i.e. headshots
 
 card-based roguelike bullet hell, AKA Enter The Gungeon meets Slay the Spire?
@@ -27,18 +63,29 @@ you can slow down/pause the game to play a card (and if you slow down you MUST p
 
 drawing a hand of cards takes time (an animation)
 
+good opportunity to work with randomizable enemies/bosses/mini-bosses
+ - each e/b/mb has ways to scale up, get attacks, effects
+ - e/b/mb can come in duos, have minions, someone replacing them after they die
+ - e/b/mb can have weird second (and maybe even third) phases
+
 cards translate into attacks, defenses, structures, weapons, temporary buffs or debuffs
 	think: barricades, turrets, traps, lures, etc.
+
+	debuffs should be AoEs that the enemy can maneuver out of (!!)
+		might be true for most debuffs and maybe some buffs too - area buffs are interesting
 
 	some cards are instants, some require an animation, some require animation AND slow you down, or force you to stand
 		obvious move: have a card that makes the next card you play an instant, or rather speeds it up by one (instant -- animation -- slow-moving animation -- standing animation)
 		item that buffs slow and standing animations?
 		item that buffs long-range damage?
+		"last bullet in clip deals double damage" relic
+		"damage buff on low HP" relic
+		critical hit multiplier relic?
 		
 	
 	there should be some energy mechanism similar to StS
 		should recharge fully when you shuffle your hand
-		should recharge slowly when you don't shuffle
+		should recharge gradually in real time
 			recharge speed is a variable too
 		
 		initially capped at 3, can be increased, StS-style
@@ -46,7 +93,32 @@ cards translate into attacks, defenses, structures, weapons, temporary buffs or 
 	you start with 2 weapon slots, can increase/decrease with items
 	
 	each end of combat you lose your weapons 
-	
+
+
+what if you DO have equipment you can change?
+ - you can change your deck
+	- since you can draw over and over again this is VERY powerful, so probably limit this somehow
+		- for example, each card replace/remove/add costs money, or you can do only a few changes...
+		
+ - you can change your items (and you're limited to a certain number at a time) - again, somehow limited
+ 
+ - this fits better in a framework where you can fight the same enemy more than once
+	- so you have a few lives, or ways to regain a life
+	- also, it works better if you have a way to learn some information about the fight ahead of time, to see if you can match your cards and items to it
+
+
+StS starts you off with a deck of BAD cards, so your goal is not only to learn better cards/spells but also to UNlearn your initial/bad cards/spells
+
+
+I kinda like BL2's elements and how they interact with each other and different enemy types
+ - you could also have destructible shields
+ 
+ - similarly to ER, different enemies and bosses should have different weaknesses
+
+
+you could have unwilling minions, where if you kill, injure or stun the owner the minion will turn against them (and you, but later)
+
+
 consumables?
 
 items affect both card aspect and bullet hell aspect
@@ -55,6 +127,10 @@ items affect both card aspect and bullet hell aspect
 you should be able to draw cards outside of combat, if you want to interact with traps, secrets, environment
 
 Levels don't have to be very linear - they can repeat, rooms can be revisited, you can chase enemies through them...
+	you like exploration and affecting a change on the world, see if this can be relevant here
+	
+	factions could be interesting - not everyone against you but some fight each other (or are capable of this, if you lure them/wake them/etc.)
+
 
 		
 so you have layers of game knowledge:
@@ -75,7 +151,20 @@ card thoughts:
  - Slay the Spire
  - Enter the Gungeon
  - Worms
- - Brotato??
+ - Brotato
+ - Hellcard
+ - Faeria
+ - MTG
+ - Gwent
+ - <any other card game>
+ 
+ - a fireball that you detonate on click
+ - magical traps that hurt or slow down enemies (glyphs, roots)
+ - a Blind spell that makes the enemy's aim random for a while
+ - a large AoE (fire storm?)
+ - 
+ 
+ 
 
 	
 MVP:
@@ -93,3 +182,9 @@ MVP:
 		- a meteor attack that has marks on the floor you need to avoid
 		
 	- a duo that you have to zigzag between (with one being aggressive and one being passive, and then they switch)
+
+
+ - NOW MAKE IT INTERESTING
+	- combos between cards, items
+	- changing levels
+	- enemies of enemies (i.e. several factions)
