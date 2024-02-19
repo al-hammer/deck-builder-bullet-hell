@@ -1,5 +1,7 @@
 import sys
 import pygame
+
+import animation
 import images
 import ui
 
@@ -26,12 +28,19 @@ def main():
         button.draw()
 
     def hover_update(button, hovering):
+        DISTANCE = 30
+        TRAVEL_TIME = 0.2
+
         if hovering:
-            button.rect.top -= 20
-            button.draw()
+            src = dest = button.rect.topleft
+            dest = (dest[0], dest[1] - DISTANCE)
+            move_up = animation.Movement(src, dest, TRAVEL_TIME)
+            button.set_animation(move_up)
         else:
-            button.rect.top += 20
-            button.draw()
+            src = dest = button.rect.topleft
+            dest = (dest[0], dest[1] + DISTANCE)
+            move_down = animation.Movement(src, dest, TRAVEL_TIME)
+            button.set_animation(move_down)
 
     axe_image = images.load_image(r"card/axe.png", 0.25)
     button = ui.Button((200, 200, 300, 450), on_click_cb=on_click, hover_update_cb=hover_update, text="Flavor text",

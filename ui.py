@@ -1,24 +1,26 @@
 import pygame
 import images
+import animation
 
 pygame.font.init()
 DEFAULT_FONT = pygame.font.SysFont("Candara", 24)
 DEFAULT_TEXT_COLOR = images.WHITE
 
 
-# TODO design + implement
-class Button(pygame.sprite.Sprite):
+class Button(animation.AnimatedSprite):
     # on_click_cb(button)
     # hover_update_cb(button, hovering)
-    def __init__(self, rect, hover_update_cb=None, on_click_cb=None,
+    # logic should have logic.update(button, dt, hovering, clicking)
+    def __init__(self, rect, hover_update_cb=None, on_click_cb=None, logic=None,
                  bg_color=images.TRANSPARENT,
                  image=None, image_offset=None, use_image_size=False,
                  text=None, text_color=DEFAULT_TEXT_COLOR, text_bg_color=None,
                  text_offset=(0, 0), font=DEFAULT_FONT, text_width=0):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.hovering = False
         self.hover_update_cb = hover_update_cb
         self.on_click_cb = on_click_cb
+        self.logic = logic
 
         self.rect = pygame.Rect(rect)  # button position and size
         if use_image_size and image is not None:
@@ -49,7 +51,8 @@ class Button(pygame.sprite.Sprite):
             text_image = self.font.render(self.text, True, self.text_color, self.text_bg_color, self.text_width)
             self.image.blit(text_image, text_image.get_rect(topleft=self.text_offset))
 
-    def update(self, mouse_pos, clicking, *args, **kwargs):
+    def update(self, dt, mouse_pos, clicking, *args, **kwargs):
+        self.update_animation(dt)
         collides = self.rect.collidepoint(*mouse_pos)
 
         if not collides and self.hovering:
@@ -66,4 +69,5 @@ class Button(pygame.sprite.Sprite):
                 if self.on_click_cb is not None:
                     self.on_click_cb(self)
 
-
+        if self.logic is not None:
+            self.logic.update(self, dt, self.hovering, clicking)
